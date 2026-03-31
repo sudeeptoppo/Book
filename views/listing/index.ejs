@@ -1,0 +1,26 @@
+<% layout("layout/boilerplate") %>
+
+
+    <h3>all listing</h3>
+    <ul>
+        <% for(let listing of allListings) { %>
+            <li>
+                <a href="/listings/<%= listing._id %>">
+                    <%= listing.title %>
+                </a>
+            </li>
+            <% } %>
+    </ul>
+    <form method="GET" action="/listings/new">
+        <button
+            class="group px-8 py-2.5 bg-sky-600 rounded-lg text-white cursor-pointer active:scale-95 transition duration-300 hover:bg-indigo-700">
+            <p class="relative h-6 overflow-hidden">
+                <span class="block transition-transform duration-300 group-hover:-translate-y-full">create new
+                    listing</span>
+                <span
+                    class="absolute w-full top-full left-1/2 -translate-x-1/2 block transition-transform duration-300 group-hover:translate-y-[-100%]">create
+                    new listing</span>
+            </p>
+        </button>
+
+    </form>
