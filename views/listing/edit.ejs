@@ -1,147 +1,112 @@
 <% layout("layout/boilerplate") %>
 
 <body>
-  <div class="flex justify-center items-center">
+  <div class="flex justify-center items-center min-h-screen">
     <form
       method="POST"
       action="/listings/<%= listing._id %>?_method=PUT"
       novalidate
-      group
-      class="p-4 bg-white rounded-lg shadow hover:shadow-xl transition"
+      class="group p-6 bg-white rounded-lg shadow w-full max-w-lg space-y-4"
     >
-      <div class="flex justify-between items-center">
-        <label
-          for="title"
-          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-          >Title</label
-        >
+      <!-- Title -->
+      <div>
+        <label class="text-sm text-zinc-500">Title</label>
         <input
           type="text"
           name="listing[title]"
           id="title"
           value="<%= listing.title %>"
+          placeholder=" "
           required
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+          class="w-full border-2 border-zinc-300 rounded-lg p-2 mt-1 peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
         />
         <span
-          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+          class="hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
         >
           Please enter title
         </span>
       </div>
-      <br />
-      <div class="flex justify-between items-center">
-        <label
-          for="author"
-          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-          >Author</label
-        >
+
+      <!-- Author -->
+      <div>
+        <label class="text-sm text-zinc-500">Author</label>
         <input
           type="text"
           name="listing[author]"
-          id="author"
           value="<%= listing.author %>"
+          placeholder=" "
           required
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+          class="w-full border-2 border-zinc-300 rounded-lg p-2 mt-1 peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
         />
         <span
-          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+          class="hidden text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
         >
           Please enter author
         </span>
       </div>
-      <br />
-      <div class="flex justify-between items-center">
-        <label
-          for="description"
-          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-          >Description</label
-        >
+
+      <!-- Description -->
+      <div>
+        <label class="text-sm text-zinc-500">Description</label>
         <input
           type="text"
           name="listing[description]"
-          id="description"
           value="<%= listing.description %>"
+          placeholder=" "
           required
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+          class="w-full border-2 border-zinc-300 rounded-lg p-2 mt-1 peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
         />
         <span
-          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+          class="hidden text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
         >
           Please enter description
         </span>
       </div>
-      <br />
-      <div class="flex justify-between items-center">
-        <label
-          for="image"
-          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-          >Image</label
-        >
-        <input
-          type="text"
-          name="listing[image]"
-          id="image"
-          value="<%= listing.image %>"
-          required
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
-        />
-        <span
-          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
-        >
-          Please enter image URL
-        </span>
-      </div>
-      <br />
-      <div class="flex justify-between items-center">
-        <label
-          for="price"
-          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-          >Price</label
-        >
+
+      <!-- Price -->
+      <div>
+        <label class="text-sm text-zinc-500">Price</label>
         <input
           type="number"
           name="listing[price]"
-          id="price"
           value="<%= listing.price %>"
+          placeholder=" "
           required
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+          class="w-full border-2 border-zinc-300 rounded-lg p-2 mt-1 peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
         />
         <span
-          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+          class="hidden text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
         >
           Please enter price
         </span>
       </div>
-      <br />
-      <div class="flex justify-between items-center">
-        <label
-          for="rating"
-          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-          >Rating</label
-        >
+
+      <!-- Rating -->
+      <div>
+        <label class="text-sm text-zinc-500">Rating</label>
         <input
           type="number"
           name="listing[rating]"
-          id="rating"
-          required
           value="<%= listing.rating %>"
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+          placeholder=" "
+          required
+          class="w-full border-2 border-zinc-300 rounded-lg p-2 mt-1 peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
         />
         <span
-          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+          class="hidden text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
         >
           Please enter rating
         </span>
       </div>
-      <br />
-      <div class="flex justify-center items-center">
-        <button
-          class="bg-zinc-500 text-white px-4 py-2 rounded-full group-invalid:pointer-events-none group-invalid:opacity-30"
-        >
-          Add
-        </button>
-      </div>
+
+      <!-- Button -->
+      <button
+        type="submit"
+        class="bg-zinc-900 text-white px-6 py-2 rounded-full group-invalid:pointer-events-none group-invalid:opacity-30"
+      >
+        Update
+      </button>
     </form>
   </div>
 </body>
+```

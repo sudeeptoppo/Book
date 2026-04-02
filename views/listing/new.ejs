@@ -6,9 +6,9 @@
       method="POST"
       action="/listings"
       novalidate
-      class="p-4 bg-white rounded-lg shadow hover:shadow-xl transition"
+      class="group p-4 bg-white rounded-lg shadow hover:shadow-xl transition"
     >
-      <div class="flex justify-between items-center">
+      <div class="">
         <label
           for="title"
           class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
@@ -18,12 +18,18 @@
           type="text"
           name="listing[title]"
           id="title"
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          class="w-full peer border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+          placeholder=" "
           required
         />
+        <span
+          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+        >
+          Please enter a valid title
+        </span>
       </div>
       <br />
-      <div class="flex justify-between items-center">
+      <div class="">
         <label
           for="author"
           class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
@@ -33,12 +39,18 @@
           type="text"
           name="listing[author]"
           id="author"
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          class="w-full border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+          placeholder=" "
           required
         />
+        <span
+          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+        >
+          Please enter a valid author
+        </span>
       </div>
       <br />
-      <div class="flex justify-between items-center">
+      <div class="">
         <label
           for="description"
           class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
@@ -48,12 +60,18 @@
           type="text"
           name="listing[description]"
           id="description"
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          class="w-full border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+          placeholder=" "
           required
         />
+        <span
+          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+        >
+          Please enter a valid description
+        </span>
       </div>
       <br />
-      <div class="flex justify-between items-center">
+      <div class="">
         <label
           for="image"
           class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
@@ -63,12 +81,18 @@
           type="text"
           name="listing[image]"
           id="image"
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          class="w-full border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+          placeholder=" "
           required
         />
+        <span
+          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+        >
+          Please enter a valid image URL
+        </span>
       </div>
       <br />
-      <div class="flex justify-between items-center">
+      <div class="">
         <label
           for="price"
           class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
@@ -78,12 +102,18 @@
           type="number"
           name="listing[price]"
           id="price"
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          class="w-full border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+          placeholder=" "
           required
         />
+        <span
+          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+        >
+          Please enter a valid price
+        </span>
       </div>
       <br />
-      <div class="flex justify-between items-center">
+      <div class="">
         <label
           for="rating"
           class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
@@ -93,13 +123,21 @@
           type="number"
           name="listing[rating]"
           id="rating"
-          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          placeholder=" "
           required
+          class="w-full border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
         />
+        <span
+          class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+        >
+          Please enter a valid rating
+        </span>
       </div>
       <br />
       <div class="flex justify-center items-center">
-        <button class="bg-zinc-500 text-white px-4 py-2 rounded-full">
+        <button
+          class="bg-zinc-500 text-white px-4 py-2 rounded-full group-invalid:pointer-events-none group-invalid:opacity-30"
+        >
           Add
         </button>
       </div>
