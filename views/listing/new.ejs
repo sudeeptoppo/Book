@@ -1,19 +1,108 @@
 <% layout("layout/boilerplate") %>
 
-    <body>
-        <form method="POST" action="/listings">
-            <label for="title">Title</label>
-            <input type="text" name="listing[title]" id="title">
-            <label for="author">Author</label>
-            <input type="text" name="listing[author]" id="author">
-            <label for="description">Description</label>
-            <input type="text" name="listing[description]" id="description">
-            <label for="image">Image</label>
-            <input type="text" name="listing[image]" id="image">
-            <label for="price">Price</label>
-            <input type="number" name="listing[price]" id="price">
-            <label for="rating">Rating</label>
-            <input type="number" name="listing[rating]" id="rating">
-            <button>submit</button>
-        </form>
-    </body>
+<body>
+  <div class="flex justify-center items-center">
+    <form
+      method="POST"
+      action="/listings"
+      novalidate
+      class="p-4 bg-white rounded-lg shadow hover:shadow-xl transition"
+    >
+      <div class="flex justify-between items-center">
+        <label
+          for="title"
+          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
+          >Title</label
+        >
+        <input
+          type="text"
+          name="listing[title]"
+          id="title"
+          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          required
+        />
+      </div>
+      <br />
+      <div class="flex justify-between items-center">
+        <label
+          for="author"
+          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
+          >Author</label
+        >
+        <input
+          type="text"
+          name="listing[author]"
+          id="author"
+          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          required
+        />
+      </div>
+      <br />
+      <div class="flex justify-between items-center">
+        <label
+          for="description"
+          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
+          >Description</label
+        >
+        <input
+          type="text"
+          name="listing[description]"
+          id="description"
+          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          required
+        />
+      </div>
+      <br />
+      <div class="flex justify-between items-center">
+        <label
+          for="image"
+          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
+          >Image</label
+        >
+        <input
+          type="text"
+          name="listing[image]"
+          id="image"
+          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          required
+        />
+      </div>
+      <br />
+      <div class="flex justify-between items-center">
+        <label
+          for="price"
+          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
+          >Price</label
+        >
+        <input
+          type="number"
+          name="listing[price]"
+          id="price"
+          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          required
+        />
+      </div>
+      <br />
+      <div class="flex justify-between items-center">
+        <label
+          for="rating"
+          class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
+          >Rating</label
+        >
+        <input
+          type="number"
+          name="listing[rating]"
+          id="rating"
+          class="border-2 border-zinc-500 rounded-lg p-2 shadow-lg hover:shadow-xl transition"
+          required
+        />
+      </div>
+      <br />
+      <div class="flex justify-center items-center">
+        <button class="bg-zinc-500 text-white px-4 py-2 rounded-full">
+          Add
+        </button>
+      </div>
+    </form>
+  </div>
+</body>

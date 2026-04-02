@@ -1,0 +1,32 @@
+<div class="fixed bottom-0 left-0 w-full bg-indigo-950 text-white overflow-hidden border-t-4 border-black-400">
+
+
+    <div class="flex whitespace-nowrap py-2">
+        <div class="animate-marquee flex gap-8 items-center text-lg font-medium">
+            <span>• Markets reach all-time highs in morning trading</span>
+            <span>• Local weather: Expected highs of 25°C with clear skies</span>
+            <span>• New technology breakthrough announced in Silicon Valley</span>
+            <span>• Sports: Hometown team clinches playoff spot</span>
+            <span>• Markets reach all-time highs in morning trading</span>
+            <span>• Local weather: Expected highs of 25°C with clear skies</span>
+            <span>• New technology breakthrough announced in Silicon Valley</span>
+            <span>• Sports: Hometown team clinches playoff spot</span>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes marquee {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .animate-marquee {
+        animation: marquee 30s linear infinite;
+    }
+</style>

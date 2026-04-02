@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
 
-</head>
-
-<body>
-    <h1>this is a book website</h1>
-    <div>
-        <%- include("../includes/navbar.ejs") %>
-            <%- body %>
+  <body class="flex flex-col min-h-screen">
+    <div class="flex-grow">
+      <%- include("../includes/navbar.ejs") %> <%- body %>
+      <!-- <%- include("../includes/bottomScrollBar.ejs") %> -->
     </div>
-</body>
-
+    <%- include("../includes/footer.ejs") %>
+  </body>
 </html>
