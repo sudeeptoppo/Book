@@ -4,10 +4,14 @@ const mongoose = require("mongoose");
 const path = require("path");
 const mongoUrl = "mongodb://localhost:27017/newBookReview";
 const bookListing = require("./models/listing.js");
+const reviewListing = require("./models/review.js");
 const initData = require("./init/data.js");
 const ejs = require("ejs");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
+const { listingSchema, reviewSchema } = require("./utils/schemaValidate.js");
 
 app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);
@@ -32,6 +36,31 @@ app.get("/", (req, res) => {
   res.render("listing/signup");
 });
 
+const validateListing = (req, res, next) => {
+  console.log(req.body.listing);
+  const result = listingSchema.safeParse(req.body.listing);
+  if (!result.success) {
+    const errorMessages = result.error.issues
+      .map((err) => err.message)
+      .join(", ");
+    throw new ExpressError(400, `Invalid listing data: ${errorMessages}`);
+  }
+  next();
+};
+
+const validateReview = (req, res, next) => {
+  console.log(req.body.review);
+  const result = reviewSchema.safeParse(req.body.review);
+  if (!result.success) {
+    const errorMessages = result.error.issues
+      .map((err) => err.message)
+      .join(", ");
+    throw new ExpressError(400, `Invalid review data: ${errorMessages}`);
+  } else {
+    next();
+  }
+};
+
 app.get("/testListing", async (req, res) => {
   const sampleListing = new bookListing({
     title: "The Great Gatsby",
@@ -54,10 +83,13 @@ app.post("/init", async (req, res) => {
 });
 
 // all listings
-app.get("/listings", async (req, res) => {
-  const allListings = await bookListing.find();
-  res.render("listing/index", { allListings });
-});
+app.get(
+  "/listings",
+  wrapAsync(async (req, res) => {
+    const allListings = await bookListing.find();
+    res.render("listing/index", { allListings });
+  }),
+);
 
 //create new
 app.get("/listings/new", (req, res) => {
@@ -65,41 +97,127 @@ app.get("/listings/new", (req, res) => {
 });
 
 //show individual listing
-app.get("/listings/:id", async (req, res) => {
-  const { id } = req.params;
-  const listing = await bookListing.findById(id);
-  res.render("listing/show", { listing });
-});
+app.get(
+  "/listings/:id",
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    const listing = await bookListing.findById(id).populate("reviews");
+    if (!listing) {
+      throw new ExpressError(404, "Listing not found");
+    }
+    res.render("listing/show", { listing });
+  }),
+);
 
 //create new listing
-app.post("/listings", async (req, res) => {
-  const data = req.body.listing;
-  const newListing = new bookListing(data);
-  await newListing.save();
-  res.redirect("/listings");
-});
+app.post(
+  "/listings",
+  validateListing,
+  wrapAsync(async (req, res) => {
+    const data = req.body.listing;
+    if (!data) {
+      throw new ExpressError(400, "Invalid listing data");
+    }
+    const listing = {
+      title: data.title,
+      author: data.author,
+      description: data.description,
+      image: data.image,
+      price: Number(data.price), // ✅ convert
+      rating: Number(data.rating), // ✅ convert
+    };
+    const newListing = new bookListing(listing);
+    await newListing.save();
+    res.redirect("/listings");
+  }),
+);
 
 //render edit form
-app.get("/listings/:id/edit", async (req, res) => {
-  const { id } = req.params;
-  console.log(id);
-  const listing = await bookListing.findById(id);
-  console.log(listing);
-  res.render("listing/edit", { listing });
-});
+app.get(
+  "/listings/:id/edit",
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    const listing = await bookListing.findById(id);
+    console.log(listing);
+    res.render("listing/edit", { listing });
+  }),
+);
 
 //update listing
-app.put("/listings/:id", async (req, res) => {
-  const { id } = req.params;
-  await bookListing.findByIdAndUpdate(id, { ...req.body.listing });
-  res.redirect(`/listings/${id}`);
-});
+app.put(
+  "/listings/:id",
+  validateListing,
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+
+    // safety check
+    if (!req.body.listing) {
+      throw new ExpressError(400, "Invalid listing data");
+    }
+
+    const data = req.body.listing;
+
+    // sanitize + ensure correct types
+    const updatedListing = {
+      title: data.title,
+      author: data.author,
+      description: data.description,
+      image: data.image || null,
+      price: Number(data.price),
+      rating: Number(data.rating),
+    };
+
+    // update with validation
+    const listing = await bookListing.findByIdAndUpdate(id, updatedListing, {
+      returnDocument: "after", // return updated doc
+      runValidators: true,
+    });
+
+    // if listing not found
+    if (!listing) {
+      throw new ExpressError(404, "Listing not found");
+    }
+
+    res.redirect(`/listings/${id}`);
+  }),
+);
 
 //delete listing
-app.delete("/listings/:id", async (req, res) => {
-  const { id } = req.params;
-  await bookListing.findByIdAndDelete(id);
-  res.redirect("/listings");
+app.delete(
+  "/listings/:id",
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    await bookListing.findByIdAndDelete(id);
+    res.redirect("/listings");
+  }),
+);
+
+//review add route
+app.post(
+  "/listings/:id/comments",
+  validateReview,
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    let listing = await bookListing.findById(id);
+    const review = new reviewListing(req.body.review);
+    if (!listing.reviews) {
+      listing.reviews = [];
+    }
+    listing.reviews.push(review);
+    await review.save();
+    await listing.save();
+    res.redirect(`/listings/${id}`);
+  }),
+);
+
+app.use((req, res, next) => {
+  next(new ExpressError(404, "Page not found"));
+});
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).render("error/err.ejs", { err });
 });
 
 app.listen(9000, () => {

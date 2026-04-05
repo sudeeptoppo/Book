@@ -1,0 +1,10 @@
+<% layout("layout/boilerplate") %>
+
+<div class="flex flex-col items-center justify-center bg-red-600 w-full h-full">
+  <div class="">
+    <h1 class="text-6xl font-bold text-white mb-4">
+      Error <%= err.statusCode %>
+    </h1>
+    <p class="text-2xl text-white"><%= err.message %></p>
+  </div>
+</div>

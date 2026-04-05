@@ -63,6 +63,24 @@
         </span>
       </div>
 
+      <!-- image url -->
+      <div>
+        <label class="text-sm text-zinc-500">Image URL</label>
+        <input
+          type="text"
+          name="listing[image]"
+          value="<%= listing.image %>"
+          placeholder=" "
+          required
+          class="w-full border-2 border-zinc-300 rounded-lg p-2 mt-1 peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+        />
+        <span
+          class="hidden text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block"
+        >
+          Please enter image URL
+        </span>
+      </div>
+
       <!-- Price -->
       <div>
         <label class="text-sm text-zinc-500">Price</label>
