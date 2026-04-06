@@ -61,6 +61,8 @@ const validateReview = (req, res, next) => {
   }
 };
 
+
+
 app.get("/testListing", async (req, res) => {
   const sampleListing = new bookListing({
     title: "The Great Gatsby",
@@ -208,6 +210,34 @@ app.post(
     await review.save();
     await listing.save();
     res.redirect(`/listings/${id}`);
+  }),
+);
+
+//review delete route
+app.delete(
+  "/listings/:id/comments/:reviewId",
+  wrapAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+
+    console.log("Deleting review:", reviewId, "from listing:", id);
+
+    const listing = await bookListing.findById(id);
+    if (!listing) {
+      throw new Error("Listing not found");
+    }
+
+    const review = await reviewListing.findById(reviewId);
+    if (!review) {
+      throw new Error("Review not found");
+    }
+
+    await bookListing.findByIdAndUpdate(id, {
+      $pull: { reviews: reviewId },
+    });
+
+    await reviewListing.findByIdAndDelete(reviewId);
+
+    res.redirect(303, `/listings/${id}`);
   }),
 );
 
