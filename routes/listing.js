@@ -57,6 +57,8 @@ router.post(
   wrapAsync(async (req, res) => {
     const data = req.body.listing;
     if (!data) {
+      req.flash("error", "Invalid listing data");
+      req.flash("error", "Please fill out all required fields correctly.");
       throw new ExpressError(400, "Invalid listing data");
     }
     const listing = {
@@ -68,6 +70,7 @@ router.post(
       rating: Number(data.rating), // ✅ convert
     };
     const newListing = new bookListing(listing);
+    req.flash("success", "Listing created successfully!");
     await newListing.save();
     res.redirect("/listings");
   }),
@@ -81,6 +84,7 @@ router.get(
     console.log(id);
     const listing = await bookListing.findById(id);
     console.log(listing);
+    
     res.render("listing/edit", { listing });
   }),
 );
@@ -94,6 +98,7 @@ router.put(
 
     // safety check
     if (!req.body.listing) {
+      req.flash("error", "Invalid listing data");
       throw new ExpressError(400, "Invalid listing data");
     }
 
@@ -117,9 +122,10 @@ router.put(
 
     // if listing not found
     if (!listing) {
+      req.flash("error", "Listing not found");
       throw new ExpressError(404, "Listing not found");
     }
-
+    req.flash("success", "Listing updated successfully!");
     res.redirect(`/listings/${id}`);
   }),
 );
@@ -130,6 +136,7 @@ router.delete(
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     await bookListing.findByIdAndDelete(id);
+    req.flash("success", "Listing deleted successfully!");
     res.redirect("/listings");
   }),
 );

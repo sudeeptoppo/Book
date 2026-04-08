@@ -15,7 +15,11 @@
 
   <body class="flex flex-col min-h-screen">
     <div class="flex-grow">
-      <%- include("../includes/navbar.ejs") %> <%- body %>
+      <%- include("../includes/navbar.ejs") %>
+      <div class="flex justify-center items-center">
+        <%- include("../includes/flash.ejs") %>
+      </div>
+      <%- body %>
       <!-- <%- include("../includes/bottomScrollBar.ejs") %> -->
     </div>
     <%- include("../includes/footer.ejs") %>

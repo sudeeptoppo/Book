@@ -33,6 +33,7 @@ router.post(
     listing.reviews.push(review);
     await review.save();
     await listing.save();
+    req.flash("success", "Review added successfully!");
     res.redirect(`/listings/${id}`);
   }),
 );
@@ -47,11 +48,13 @@ router.delete(
 
     const listing = await bookListing.findById(id);
     if (!listing) {
+      req.flash("error", "Listing not found");
       throw new Error("Listing not found");
     }
 
     const review = await reviewListing.findById(reviewId);
     if (!review) {
+      req.flash("error", "Review not found");
       throw new Error("Review not found");
     }
 
@@ -60,7 +63,7 @@ router.delete(
     });
 
     await reviewListing.findByIdAndDelete(reviewId);
-
+    req.flash("success", "Review deleted successfully!");
     res.redirect(303, `/listings/${id}`);
   }),
 );
