@@ -1,32 +1,49 @@
-<!-- <% layout("layout/boilerplate") %>
+<% layout("layout/boilerplate") %>
 <div class="min-h-screen flex flex-col md:flex-row">
-  
+  <!-- LEFT SIDE -->
   <div class="w-full md:w-1/2 flex items-center justify-center bg-white p-8">
     <div class="w-full max-w-md">
       <h2 class="text-3xl font-bold mb-2">Create an account</h2>
       <p class="text-gray-500 mb-6">
-        Don't have an account? <a href="#" class="text-blue-500">Signup</a>
-      </p>  
+        If you already have an account?
+        <a href="/login" class="text-blue-500">Login</a>
+      </p>
 
-      <form class="space-y-4">
+      <form class="space-y-4" method="post" action="/signup">
+        <div>
+          <label class="block mb-1">username</label>
+          <input
+            type="text"
+            name="username"
+            class="w-full border rounded px-3 py-2"
+          />
+        </div>
         <div>
           <label class="block mb-1">Email</label>
-          <input type="email" class="w-full border rounded px-3 py-2" />
+          <input
+            type="email"
+            name="email"
+            class="w-full border rounded px-3 py-2"
+          />
         </div>
 
         <div>
           <label class="block mb-1">Password</label>
-          <input type="password" class="w-full border rounded px-3 py-2" />
+          <input
+            type="password"
+            name="password"
+            class="w-full border rounded px-3 py-2"
+          />
         </div>
 
         <button class="w-full bg-gray-800 text-white py-2 rounded">
-          Sign in
+          Sign up
         </button>
       </form>
     </div>
   </div>
 
-
+  <!-- RIGHT SIDE -->
   <div
     class="w-full md:w-1/2 flex items-center justify-center bg-gray-100 p-10"
   >
@@ -39,4 +56,4 @@
       <p class="text-gray-500 text-sm">CEO | Acme Corp</p>
     </div>
   </div>
-</div> -->
+</div>

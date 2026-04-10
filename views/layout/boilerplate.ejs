@@ -10,6 +10,13 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+      rel="stylesheet"
+    />
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
 
@@ -22,6 +29,11 @@
       <%- body %>
       <!-- <%- include("../includes/bottomScrollBar.ejs") %> -->
     </div>
+    <% if (url === "/login" || url === "/signup") { %>
+    
+    <%- include("../includes/bottomScrollBar.ejs") %>
+    <% } else { %>
     <%- include("../includes/footer.ejs") %>
+    <% } %>
   </body>
 </html>

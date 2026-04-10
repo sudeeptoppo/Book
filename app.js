@@ -11,8 +11,15 @@ const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
+
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
+const user = require("./routes/user.js");
+
+
 
 app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);
@@ -34,6 +41,12 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 async function main() {
   await mongoose.connect(mongoUrl);
 }
@@ -49,6 +62,9 @@ main()
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.currentUser = req.user;
+  res.locals.url = req.originalUrl;
+  console.log("Current URL:", req.originalUrl);
   next();
 });
 
@@ -58,6 +74,7 @@ app.get("/", (req, res) => {
 
 app.use("/listings", listings);
 app.use("/listings/:id/comments", reviews);
+app.use("/", user);
 
 app.get("/testListing", async (req, res) => {
   const sampleListing = new bookListing({

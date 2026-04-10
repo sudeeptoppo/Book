@@ -1,239 +1,227 @@
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
-
-  * {
-    font-family: "Geist", sans-serif;
-  }
-</style>
-
-<nav
-  class="bg-white px-6 md:px-16 lg:px-24 xl:px-32 py-4 flex items-center justify-between relative sticky top-0 z-50 border-b-2 border-zinc-100"
+<!-- <nav
+  class="flex items-center justify-between px-6 md:px-16 py-6 mt-10 mb-10 relative"
 >
-  <div class="flex items-center gap-20">
-    <a href="/listings">
-      <i class="fa-solid fa-receipt text-4xl"></i>
-    </a>
-    <!-- Desktop Nav Items -->
-    <div class="hidden md:flex items-center gap-8">
-      <div class="relative group">
-        <button
-          class="flex items-center gap-1.5 text-md text-zinc-800 cursor-pointer bg-transparent border-0 py-2"
-        >
-          All Pages
-          <svg
-            id="desktopChevron"
-            class="transition-transform group-hover:rotate-180"
-            width="10"
-            height="6"
-            viewBox="0 0 10 6"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="m1 1 4 4 4-4"
-              stroke="#71717b"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-        <div
-          class="absolute top-full left-0 mt-1 w-44 bg-white border border-zinc-200 rounded-xl shadow-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all"
-        >
-          <a
-            href="#"
-            class="block px-4 py-2 text-md text-zinc-600 hover:bg-zinc-50"
-            >Landing Pages</a
-          >
-          <a
-            href="#"
-            class="block px-4 py-2 text-md text-zinc-600 hover:bg-zinc-50"
-            >About Pages</a
-          >
-          <a
-            href="#"
-            class="block px-4 py-2 text-md text-zinc-600 hover:bg-zinc-50"
-            >Contact Pages</a
-          >
-          <a
-            href="#"
-            class="block px-4 py-2 text-md text-zinc-600 hover:bg-zinc-50"
-            >Blog Pages</a
-          >
-        </div>
-      </div>
-      <a href="#contactInfo" class="text-md text-zinc-500 hover:text-zinc-800"
-        >Contact Info</a
-      >
-      <a href="#" class="text-md text-zinc-500 hover:text-zinc-800">Pricing</a>
-      <a href="#" class="text-md text-zinc-500 hover:text-zinc-800">Blogs</a>
-    </div>
+  Logo
+  <div
+    class="text-[#e7a58f] text-5xl font-semibold tracking-[0.25em] uppercase"
+  >
+    <a href="/listings"><i class="fa-solid fa-receipt"></i></a>
   </div>
 
-  <!-- CTA Button -->
-  <a
-    href="/"
-    class="hidden md:flex items-center gap-2.5 bg-linear-to-r from-zinc-950 to-zinc-500 text-zinc-50 hover:text-zinc-200 text-sm font-medium pl-5 pr-2 py-2 rounded-full cursor-pointer border-0"
+  Desktop Menu
+  <ul
+    class="hidden md:flex space-x-20 text-[#D4702A] font-normal uppercase text-xl scale-y-145"
   >
-    Sign Up
-    <span
-      class="w-7 h-7 rounded-full bg-white flex items-center justify-center"
+    <li class="text-[#e7a58f] font-medium cursor-pointer">HOME</li>
+    <li
+      class="hover:text-[#f5c3b3] cursor-pointer transition-colors duration-300 text-[#e7a58f]"
     >
-      <svg
-        width="12"
-        height="10"
-        viewBox="0 0 12 10"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M.6 4.602h10m-4-4 4 4-4 4"
-          stroke="#3f3f47"
-          stroke-width="1.2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </span>
-  </a>
+      Books
+    </li>
+    <li
+      class="hover:text-[#f5c3b3] cursor-pointer transition-colors duration-300 text-[#e7a58f]"
+    >
+      add new book
+    </li>
+    <li
+      class="hover:text-yellow-500 cursor-pointer transition-colors duration-300 text-[#e7a58f]"
+    >
+      CONTACT
+    </li>
+    <li
+      class="hover:text-yellow-500 cursor-pointer transition-colors duration-300 text-[#e7a58f]"
+    >
+      ABOUT US
+    </li>
+  </ul>
 
-  <!-- Hamburger -->
-  <button
-    onclick="toggleMenu()"
-    class="md:hidden flex flex-col gap-1.5 cursor-pointer bg-transparent border-0 p-1"
-  >
-    <span
-      id="bar1"
-      class="block w-6 h-0.5 bg-zinc-800 transition-transform"
-    ></span>
-    <span
-      id="bar2"
-      class="block w-6 h-0.5 bg-zinc-800 transition-opacity"
-    ></span>
-    <span
-      id="bar3"
-      class="block w-6 h-0.5 bg-zinc-800 transition-transform"
-    ></span>
+  Right Icons
+  <div class="hidden md:flex items-center space-x-6 text-orange-600">
+    icons same as yours
+  </div>
+
+  Mobile Menu Button (3 dots)
+  <button id="menuBtn" class="md:hidden text-[#e7a58f] text-3xl">
+    <i class="fa-solid fa-bars"></i>
   </button>
 
-  <!-- Mobile Menu -->
-  <div
+  Mobile Dropdown
+  <ul
     id="mobileMenu"
-    class="absolute top-full left-0 w-full bg-white border-t border-zinc-200 flex-col p-5 gap-1 md:hidden z-50 hidden"
+    class="absolute top-20 right-6 w-56 bg-white shadow-lg rounded-lg text-[#D4702A] font-medium uppercase text-lg flex-col space-y-4 p-6 z-50 transition-all duration-300 opacity-0 scale-95 pointer-events-none"
   >
-    <button
-      onclick="toggleDropdown('mobileDropdown', 'mobileChevron')"
-      class="flex items-center justify-between w-full px-4 py-2.5 rounded-lg text-sm text-zinc-800 hover:bg-zinc-50 bg-transparent border-0 cursor-pointer"
+    <li class="text-[#e7a58f] cursor-pointer">HOME</li>
+    <li
+      class="hover:text-yellow-500 cursor-pointer transition-colors duration-300 text-[#e7a58f]"
     >
-      All Pages
-      <svg
-        id="mobileChevron"
-        class="transition-transform"
-        width="10"
-        height="6"
-        viewBox="0 0 10 6"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="m1 1 4 4 4-4"
-          stroke="#71717b"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </button>
-    <div id="mobileDropdown" class="hidden flex-col pl-4">
-      <a
-        href="#"
-        class="px-4 py-2 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-        >Landing Pages</a
-      >
-      <a
-        href="#"
-        class="px-4 py-2 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-        >About Pages</a
-      >
-      <a
-        href="#"
-        class="px-4 py-2 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-        >Contact Pages</a
-      >
-      <a
-        href="#"
-        class="px-4 py-2 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-        >Blog Pages</a
-      >
-    </div>
-    <a
-      href="#contactInfo"
-      class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-      >Contact Info</a
+      Books
+    </li>
+    <li
+      class="hover:text-yellow-500 cursor-pointer transition-colors duration-300 text-[#e7a58f]"
     >
-    <a
-      href="#"
-      class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-      >Pricing</a
+      add new book
+    </li>
+    <li
+      class="hover:text-yellow-500 cursor-pointer transition-colors duration-300 text-[#e7a58f]"
     >
-    <a
-      href="#"
-      class="px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50"
-      >Blogs</a
+      CONTACT
+    </li>
+    <li
+      class="hover:text-yellow-500 cursor-pointer transition-colors duration-300 text-[#e7a58f]"
     >
-    <a
-      href="/"
-      class="flex items-center justify-center gap-2.5 bg-linear-to-r from-zinc-950 to-zinc-500 text-zinc-50 text-sm font-medium px-5 py-2.5 rounded-full cursor-pointer border-0 mt-3 w-fit"
-    >
-      Sign Up
-      <span
-        class="w-7 h-7 rounded-full bg-white flex items-center justify-center"
-      >
-        <svg
-          width="12"
-          height="10"
-          viewBox="0 0 12 10"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M.6 4.602h10m-4-4 4 4-4 4"
-            stroke="#3f3f47"
-            stroke-width="1.2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </span>
-    </a>
-  </div>
+      ABOUT US
+    </li>
+  </ul>
 </nav>
 
 <script>
-  let menuOpen = false;
+  const btn = document.getElementById("menuBtn");
+  const menu = document.getElementById("mobileMenu");
 
-  function toggleMenu() {
-    menuOpen = !menuOpen;
-    const menu = document.getElementById("mobileMenu");
-    const bar1 = document.getElementById("bar1");
-    const bar2 = document.getElementById("bar2");
-    const bar3 = document.getElementById("bar3");
+  // Hover on button → open
+  btn.addEventListener("mouseenter", () => {
+    menu.classList.remove("opacity-0", "scale-95", "pointer-events-none");
+  });
 
-    menu.classList.toggle("hidden", !menuOpen);
-    menu.classList.toggle("flex", menuOpen);
-    bar1.style.transform = menuOpen ? "translateY(8px) rotate(45deg)" : "";
-    bar2.style.opacity = menuOpen ? "0" : "1";
-    bar3.style.transform = menuOpen ? "translateY(-8px) rotate(-45deg)" : "";
-  }
+  // Leave button → close (if not on menu)
+  btn.addEventListener("mouseleave", () => {
+    setTimeout(() => {
+      if (!menu.matches(":hover")) {
+        menu.classList.add("opacity-0", "scale-95", "pointer-events-none");
+      }
+    }, 100);
+  });
 
-  function toggleDropdown(dropdownId, chevronId) {
-    const dropdown = document.getElementById(dropdownId);
-    const chevron = document.getElementById(chevronId);
-    const isHidden = dropdown.classList.contains("hidden");
+  // Stay open when hovering menu
+  menu.addEventListener("mouseenter", () => {
+    menu.classList.remove("opacity-0", "scale-95", "pointer-events-none");
+  });
 
-    dropdown.classList.toggle("hidden", !isHidden);
-    dropdown.classList.toggle("flex", isHidden);
-    chevron.style.transform = isHidden ? "rotate(180deg)" : "";
-  }
-</script>
+  // Close when leaving menu
+  menu.addEventListener("mouseleave", () => {
+    menu.classList.add("opacity-0", "scale-95", "pointer-events-none");
+  });
+</script> -->
+<nav
+  class="w-full flex items-center justify-between px-10 md:px-20 py-6 bg-white"
+>
+  <!-- Logo -->
+  <div
+    class="text-[#c58c6d] text-2xl tracking-[0.3em]"
+    style="font-family: &quot;Bebas Neue&quot;, sans-serif"
+  >
+    LOGO
+  </div>
+
+  <!-- Menu -->
+  <ul
+    class="hidden md:flex space-x-16 text-[#c58c6d] text-xl tracking-[0.25em] uppercase"
+    style="font-family: &quot;Bebas Neue&quot;, sans-serif"
+  >
+    <li class="text-[#e0b04b] cursor-pointer transition-colors duration-300">
+      HOME
+    </li>
+
+    <li
+      class="hover:text-[#e0b04b] cursor-pointer transition-colors duration-300"
+    >
+      SERVICES
+    </li>
+
+    <li
+      class="hover:text-[#e0b04b] cursor-pointer transition-colors duration-300"
+    >
+      NEWS
+    </li>
+
+    <li
+      class="hover:text-[#e0b04b] cursor-pointer transition-colors duration-300"
+    >
+      CONTACT
+    </li>
+
+    <li
+      class="hover:text-[#e0b04b] cursor-pointer transition-colors duration-300"
+    >
+      ABOUT
+    </li>
+  </ul>
+
+  <!-- ✅ RIGHT SIDE (ADDED) -->
+  <div class="hidden md:flex items-center space-x-6">
+    <!-- Search -->
+    <div
+      class="flex items-center border border-[#c58c6d] rounded-full px-3 py-1"
+    >
+      <input
+        type="text"
+        placeholder="Search"
+        class="outline-none bg-transparent text-[#c58c6d] placeholder-[#c58c6d] text-sm w-24"
+      />
+      <i class="fa-solid fa-magnifying-glass text-[#c58c6d]"></i>
+    </div>
+
+    <% if (!currentUser) { %>
+      <!-- Sign In -->
+      <a
+        href="/login"
+        class="text-[#c58c6d] hover:text-[#e0b04b] transition-colors duration-300 uppercase tracking-[0.2em]"
+        style="font-family: &quot;Bebas Neue&quot;, sans-serif"
+      >
+        SIGN IN
+      </a>
+    <% } else { %>
+      <!-- Logout -->
+      <form action="/logout" method="POST">
+        <button
+          class="text-[#c58c6d] hover:text-[#e0b04b] transition-colors duration-300 uppercase tracking-[0.2em]"
+          style="font-family: &quot;Bebas Neue&quot;, sans-serif"
+        >
+          LOGOUT
+        </button>
+      </form>
+    <% } %>
+
+    
+
+    
+  </div>
+
+  <!-- Mobile Menu Button -->
+  <button id="menuBtn" class="md:hidden text-[#c58c6d] text-3xl">⋮</button>
+
+  <!-- Mobile Dropdown -->
+  <ul
+    id="mobileMenu"
+    class="absolute top-full right-10 mt-4 w-56 bg-white shadow-lg rounded-lg text-[#c58c6d] uppercase text-lg space-y-4 p-6 opacity-0 scale-95 pointer-events-none transition-all duration-300"
+    style="
+      font-family: &quot;Bebas Neue&quot;, sans-serif;
+      letter-spacing: 0.2em;
+    "
+  >
+    <li class="text-[#e0b04b]">HOME</li>
+    <li class="hover:text-[#e0b04b]">SERVICES</li>
+    <li class="hover:text-[#e0b04b]">NEWS</li>
+    <li class="hover:text-[#e0b04b]">CONTACT</li>
+    <li class="hover:text-[#e0b04b]">ABOUT</li>
+
+    <!-- ✅ Added for mobile -->
+    <li>
+      <input
+        type="text"
+        placeholder="Search"
+        class="w-full border border-[#c58c6d] rounded-full px-3 py-1 outline-none text-sm"
+      />
+    </li>
+
+    <li class="hover:text-[#e0b04b]">
+      <a href="/login">SIGN IN</a>
+    </li>
+
+    <li>
+      <form action="/logout" method="POST">
+        <button class="hover:text-[#e0b04b]">LOGOUT</button>
+      </form>
+    </li>
+  </ul>
+</nav>

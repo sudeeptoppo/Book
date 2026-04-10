@@ -5,6 +5,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema } = require("../utils/schemaValidate.js");
 const router = express.Router();
+const {isLoggedIn} = require("../middlewares/middlewares.js");
 
 
 
@@ -33,7 +34,8 @@ router.get(
 );
 
 //create new
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
+  
   res.render("listing/new");
 });
 
@@ -54,8 +56,10 @@ router.get(
 router.post(
   "/",
   validateListing,
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const data = req.body.listing;
+    
     if (!data) {
       req.flash("error", "Invalid listing data");
       req.flash("error", "Please fill out all required fields correctly.");
@@ -79,6 +83,7 @@ router.post(
 //render edit form
 router.get(
   "/:id/edit",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     console.log(id);
@@ -93,6 +98,7 @@ router.get(
 router.put(
   "/:id",
   validateListing,
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
 
@@ -133,6 +139,7 @@ router.put(
 //delete listing
 router.delete(
   "/:id",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     await bookListing.findByIdAndDelete(id);
