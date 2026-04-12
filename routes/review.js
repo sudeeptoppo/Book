@@ -5,28 +5,20 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { reviewSchema } = require("../utils/schemaValidate.js");
 const router = express.Router({ mergeParams: true });
+const { validateReview, isLoggedIn, isReviewAuthor } = require("../middlewares/middlewares.js");
 
-const validateReview = (req, res, next) => {
-  console.log(req.body.review);
-  const result = reviewSchema.safeParse(req.body.review);
-  if (!result.success) {
-    const errorMessages = result.error.issues
-      .map((err) => err.message)
-      .join(", ");
-    throw new ExpressError(400, `Invalid review data: ${errorMessages}`);
-  } else {
-    next();
-  }
-};
+
 
 //review add route
 router.post(
   "/",
+  isLoggedIn,
   validateReview,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     let listing = await bookListing.findById(id);
     const review = new reviewListing(req.body.review);
+    review.author = req.user._id;
     if (!listing.reviews) {
       listing.reviews = [];
     }
@@ -41,6 +33,8 @@ router.post(
 //review delete route
 router.delete(
   "/:reviewId",
+  isLoggedIn,
+  isReviewAuthor,
   wrapAsync(async (req, res) => {
     const { id, reviewId } = req.params;
 

@@ -19,8 +19,6 @@ const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 const user = require("./routes/user.js");
 
-
-
 app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);
 app.set("views", path.join(__dirname, "views"));
@@ -63,6 +61,7 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.user;
+  console.log(req.user);
   res.locals.url = req.originalUrl;
   console.log("Current URL:", req.originalUrl);
   next();
@@ -92,7 +91,11 @@ app.get("/testListing", async (req, res) => {
 });
 
 app.post("/init", async (req, res) => {
-  // await bookListing.deleteMany({});
+  await bookListing.deleteMany({});
+  initData = initData.map((listing) => ({
+    ...listing,
+    owner: "69d97aae8ba7fdf0949adc77",
+  }));
   await bookListing.insertMany(initData);
   res.redirect("/listings");
 });
