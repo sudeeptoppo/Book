@@ -13,29 +13,19 @@ const {
 } = require("../middlewares/middlewares.js");
 
 // all listings
-router.get(
-  "/",
-  wrapAsync(listingController.allListings),
+//create new listing
+router.route("/")
+  .get(wrapAsync(listingController.allListings))
+  .post(
+    isLoggedIn,
+    validateListing,
+    wrapAsync(listingController.createNewListing),
 );
 
 //create new
 router.get("/new", isLoggedIn, (req, res) => {
   res.render("listing/new");
 });
-
-//show individual listing
-router.get(
-  "/:id",
-  wrapAsync(listingController.showIndividualListings),
-);
-
-//create new listing
-router.post(
-  "/",
-  validateListing,
-  isLoggedIn,
-  wrapAsync(listingController.createNewListing),
-);
 
 //render edit form
 router.get(
@@ -45,21 +35,55 @@ router.get(
   wrapAsync(listingController.renderEditForm),
 );
 
+router
+  .route("/:id")
+  .get(wrapAsync(listingController.showIndividualListings))
+  .put(isLoggedIn, isOwner, validateListing, wrapAsync(listingController.updateListing))
+  .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing)); 
+
+
+//create new listing 
+// router.get("/", wrapAsync(listingController.allListings));
+
+
+
+//show individual listing
+// router.get("/:id", wrapAsync(listingController.showIndividualListings));
+
+//create new listing
+// router.post(
+//   "/",
+//   validateListing,
+//   isLoggedIn,
+//   wrapAsync(listingController.createNewListing),
+// );
+
+
+
 //update listing
-router.put(
-  "/:id",
-  validateListing,
-  isLoggedIn,
-  isOwner,
-  wrapAsync(listingController.updateListing),
-);
+// router.put(
+//   "/:id",
+//   validateListing,
+//   isLoggedIn,
+//   isOwner,
+//   wrapAsync(listingController.updateListing),
+// );
 
 //delete listing
-router.delete(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  wrapAsync(listingController.deleteListing),
-);
+// router.delete(
+//   "/:id",
+//   isLoggedIn,
+//   isOwner,
+//   wrapAsync(listingController.deleteListing),
+// );
+
+
+
+//show individual listing
+//update listing
+//delete listing
+
+
+
 
 module.exports = router;
