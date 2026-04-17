@@ -1,143 +1,129 @@
 <% layout("layout/boilerplate") %>
 
-<div class="flex flex-col md:flex-row items-center min-h-screen">
+  <div class="flex flex-col md:flex-row items-center min-h-screen">
 
-  <!-- LEFT: IMAGE MOCKUP -->
-  <div class="w-full md:w-1/2 sm:mt-10 md:mt-0 flex items-center justify-center p-10 relative ">
+    <!-- LEFT: IMAGE MOCKUP -->
+    <div class="w-full md:w-1/2 sm:mt-10 md:mt-0 flex items-center justify-center p-10 relative ">
 
-    <!-- Peach Circle Background -->
-    <div class="absolute w-[380px] h-[380px] bg-[#e7a58f] rounded-full"></div>
+      <!-- Peach Circle Background -->
+      <div class="absolute w-[380px] h-[380px] bg-[#e7a58f] rounded-full"></div>
 
-    <!-- Book Image -->
-    <img
-      src="<%= listing.image %>"
-      alt="cover"
-      class="relative z-10 hover:scale-105 hover:z-49 transition-transform w-[260px] md:w-[300px] rounded-xl shadow-[0_25px_50px_rgba(0,0,0,0.5)] mt-3"
-    />
+      <!-- Book Image -->
+      <img src="<%= listing.image %>" alt="cover"
+        class="relative z-10 hover:scale-105 hover:z-49 transition-transform w-[260px] md:w-[300px] rounded-xl shadow-[0_25px_50px_rgba(0,0,0,0.5)] mt-3" />
 
-  </div>
+    </div>
 
-  <!-- RIGHT: TEXT CONTENT -->
-  <div class="w-full md:w-1/2 p-10 bg-white">
-    <div class="max-w-lg mx-auto">
+    <!-- RIGHT: TEXT CONTENT -->
+    <div class="w-full md:w-1/2 p-10 bg-white">
+      <div class="max-w-lg mx-auto">
 
-      <h2 class="text-3xl font-bold mb-2"><%= listing.title %></h2>
-      <p class="text-gray-500 mb-6">By <%= listing.author %></p>
+        <h2 class="text-3xl font-bold mb-2">
+          <%= listing.title %>
+        </h2>
+        <p class="text-gray-500 mb-6">By <%= listing.author %>
+        </p>
 
-      <p class="text-gray-700 mb-6 leading-relaxed">
-        <%= listing.description %>
-      </p>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          <%= listing.description %>
+        </p>
 
-      <% if (currentUser && currentUser._id.equals(listing.owner._id)) { %>
-        <div class="flex gap-4 mb-6">
-        <a
-          class="bg-gray-800 text-white py-2 px-4 rounded"
-          href="/listings/<%= listing._id %>/edit"
-        >
-          edit
-        </a>
+        <% if (currentUser && currentUser._id.equals(listing.owner._id)) { %>
+          <div class="flex gap-4 mb-6">
+            <a class="bg-gray-800 text-white py-2 px-4 rounded" href="/listings/<%= listing._id %>/edit">
+              edit
+            </a>
 
-        <form
-          method="POST"
-          action="/listings/<%= listing._id %>?_method=DELETE"
-        >
-          <button class="bg-gray-800 text-white py-2 px-4 rounded">
-            delete
-          </button>
-        </form>
+            <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+              <button class="bg-gray-800 text-white py-2 px-4 rounded">
+                delete
+              </button>
+            </form>
+          </div>
+          <% } %>
+
+
       </div>
-      <% } %>
-      
-
     </div>
   </div>
-</div>
 
-<!-- COMMENTS SECTION -->
-<div class="grid grid-cols-6">
-  <div class="col-span-4 col-start-2">
-          <p class="text-gray-500 mb-6">Page created by <%= listing.owner.username %></p>
-    <hr class="border-gray-300 my-6" />
+  <!-- COMMENTS SECTION -->
+  <div class="grid grid-cols-6">
+    <div class="col-span-4 col-start-2">
+      <p class="text-gray-500 mb-6">Page created by <%= listing.owner.username %>
+      </p>
+      <hr class="border-gray-300 my-6" />
 
-    <div class="space-y-4 flex flex-col items-center justify-center">
+      <div class="space-y-4 flex flex-col items-center justify-center">
 
-      <h3 class="text-2xl font-bold mb-4">Give your thoughts</h3>
+        <h3 class="text-2xl font-bold mb-4">Give your thoughts</h3>
 
-      <% if (currentUser) { %>
-        <form
-        method="post"
-        action="/listings/<%= listing._id %>/comments"
-        novalidate
-        class="group p-4 w-full max-w-md"
-      >
-        <!-- Rating -->
-        <div>
-          <label class="text-sm text-zinc-500">Rating</label>
-          <input
-            type="number"
-            name="review[rating]"
-            required
-            class="w-full border-2 border-zinc-500 rounded-lg p-2 shadow-md"
-          />
-        </div>
-
-        <br>
-
-        <!-- Comment -->
-        <div>
-          <label class="text-sm text-zinc-500">Comment</label>
-          <textarea
-            required
-            name="review[comment]"
-            rows="4"
-            class="w-full border-2 border-zinc-500 rounded-lg p-2 shadow-md"
-          ></textarea>
-        </div>
-
-        <!-- Button -->
-        <div class="flex justify-center mt-4">
-          <button class="bg-zinc-500 text-white px-4 py-2 rounded-full">
-            Add
-          </button>
-        </div>
-      </form>
-      <% } %>
-
-
-      <!-- COMMENTS LIST -->
-      <h3 class="text-2xl font-bold mb-4">Comments</h3>
-
-      <ul class="w-full max-w-md">
-        <% if (listing.reviews && listing.reviews.length > 0) { %>
-          <% listing.reviews.forEach(review => { %>
+        <% if (currentUser) { %>
+          <form method="post" action="/listings/<%= listing._id %>/comments" novalidate
+            class="group p-4 w-full max-w-md">
+            <!-- Rating -->
             <div>
-              <div class=" ">
-                <%- include("../includes/reviewAvatar.ejs", { review: review }) %>
-              </div>
-          
-            <li class="border-b border-gray-300 py-4 ">
-              <p class="text-gray-700 mb-2"><%= review.comment %></p>
-              
-              <div class="flex items-center justify-between">
-                <p class="text-gray-500 text-sm">
-                Rating: <%= review.rating %>
-              </p>
-              <% if (currentUser && currentUser._id.equals(review.author)) { %>
-                <form method="post" action="/listings/<%= listing._id %>/comments/<%= review._id %>?_method=DELETE">
-                  <button class="bg-zinc-500 text-white px-4 py-2 rounded-full">Delete</button>
-                </form>
-              <% } %>
-                
-              </div>
-            </li>
+              <label class="text-sm text-zinc-500">Rating</label>
+              <input type="number" name="review[rating]" required
+                class="w-full border-2 border-zinc-500 rounded-lg p-2 shadow-md" />
             </div>
-          <% }) %>
-        <% } else { %>
-          <p class="text-gray-500">No comments yet.</p>
-        <% } %>
-      </ul>
+
+            <br>
+
+            <!-- Comment -->
+            <div>
+              <label class="text-sm text-zinc-500">Comment</label>
+              <textarea required name="review[comment]" rows="4"
+                class="w-full border-2 border-zinc-500 rounded-lg p-2 shadow-md"></textarea>
+            </div>
+
+            <!-- Button -->
+            <div class="flex justify-center mt-4">
+              <button class="bg-zinc-500 text-white px-4 py-2 rounded-full">
+                Add
+              </button>
+            </div>
+          </form>
+          <% } %>
+
+
+            <!-- COMMENTS LIST -->
+            <h3 class="text-2xl font-bold mb-4">Comments</h3>
+
+            <ul class="w-full max-w-md">
+              <% if (listing.reviews && listing.reviews.length> 0) { %>
+                <% listing.reviews.forEach(review=> { %>
+                  <div>
+                    <div class=" ">
+                      <%- include("../includes/reviewAvatar.ejs", { review: review }) %>
+                    </div>
+
+                    <li class="border-b border-gray-300 py-4 ">
+                      <p class="text-gray-700 mb-2">
+                        <%= review.comment %>
+                      </p>
+
+                      <div class="flex items-center justify-between">
+                        <p class="text-gray-500 text-sm">
+                          Rating: <%= review.rating %>
+                        </p>
+                        <% if (currentUser && currentUser._id.equals(review.author._id)) { %>
+                          <form method="post"
+                            action="/listings/<%= listing._id %>/comments/<%= review._id %>?_method=DELETE">
+                            <button class="bg-zinc-500 text-white px-4 py-2 rounded-full">Delete</button>
+                          </form>
+                          <% } %>
+
+                      </div>
+                    </li>
+                  </div>
+                  <% }) %>
+                    <% } else { %>
+                      <p class="text-gray-500">No comments yet.</p>
+                      <% } %>
+            </ul>
+
+      </div>
 
     </div>
-
   </div>
-</div>

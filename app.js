@@ -61,9 +61,12 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.user;
-  console.log(req.user);
   res.locals.url = req.originalUrl;
-  console.log("Current URL:", req.originalUrl);
+  
+  // Debug logs (development only)
+  if (process.env.NODE_ENV !== 'production') {
+    console.log("Current URL:", req.originalUrl);
+  }
   next();
 });
 

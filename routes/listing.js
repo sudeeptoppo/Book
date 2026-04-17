@@ -4,6 +4,7 @@ const reviewListing = require("../models/review.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema } = require("../utils/schemaValidate.js");
+const listingController = require("../controller/listings.js");
 const router = express.Router();
 const {
   isLoggedIn,
@@ -14,10 +15,7 @@ const {
 // all listings
 router.get(
   "/",
-  wrapAsync(async (req, res) => {
-    const allListings = await bookListing.find();
-    res.render("listing/index", { allListings });
-  }),
+  wrapAsync(listingController.allListings),
 );
 
 //create new
@@ -28,21 +26,7 @@ router.get("/new", isLoggedIn, (req, res) => {
 //show individual listing
 router.get(
   "/:id",
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-    const listing = await bookListing
-      .findById(id)
-      .populate({
-        path: "reviews",
-        populate: { path: "author" },
-      })
-      .populate("owner");
-    if (!listing) {
-      throw new ExpressError(404, "Listing not found");
-    }
-    console.log(listing);
-    res.render("listing/show", { listing });
-  }),
+  wrapAsync(listingController.showIndividualListings),
 );
 
 //create new listing
@@ -50,29 +34,7 @@ router.post(
   "/",
   validateListing,
   isLoggedIn,
-  wrapAsync(async (req, res) => {
-    const data = req.body.listing;
-
-    if (!data) {
-      req.flash("error", "Invalid listing data");
-      req.flash("error", "Please fill out all required fields correctly.");
-      throw new ExpressError(400, "Invalid listing data");
-    }
-    const listing = {
-      title: data.title,
-      author: data.author,
-      description: data.description,
-      image: data.image,
-      price: Number(data.price), // ✅ convert
-      rating: Number(data.rating), // ✅ convert
-    };
-    const newListing = new bookListing(listing);
-    console.log(newListing);
-    newListing.owner = req.user._id;
-    req.flash("success", "Listing created successfully!");
-    await newListing.save();
-    res.redirect("/listings");
-  }),
+  wrapAsync(listingController.createNewListing),
 );
 
 //render edit form
@@ -80,14 +42,7 @@ router.get(
   "/:id/edit",
   isLoggedIn,
   isOwner,
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-    console.log(id);
-    const listing = await bookListing.findById(id);
-    console.log(listing);
-
-    res.render("listing/edit", { listing });
-  }),
+  wrapAsync(listingController.renderEditForm),
 );
 
 //update listing
@@ -96,41 +51,7 @@ router.put(
   validateListing,
   isLoggedIn,
   isOwner,
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-
-    // safety check
-    if (!req.body.listing) {
-      req.flash("error", "Invalid listing data");
-      throw new ExpressError(400, "Invalid listing data");
-    }
-
-    const data = req.body.listing;
-
-    // sanitize + ensure correct types
-    const updatedListing = {
-      title: data.title,
-      author: data.author,
-      description: data.description,
-      image: data.image || null,
-      price: Number(data.price),
-      rating: Number(data.rating),
-    };
-
-    // update with validation
-    const listing = await bookListing.findByIdAndUpdate(id, updatedListing, {
-      returnDocument: "after", // return updated doc
-      runValidators: true,
-    });
-
-    // if listing not found
-    if (!listing) {
-      req.flash("error", "Listing not found");
-      throw new ExpressError(404, "Listing not found");
-    }
-    req.flash("success", "Listing updated successfully!");
-    res.redirect(`/listings/${id}`);
-  }),
+  wrapAsync(listingController.updateListing),
 );
 
 //delete listing
@@ -138,12 +59,7 @@ router.delete(
   "/:id",
   isLoggedIn,
   isOwner,
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-    await bookListing.findByIdAndDelete(id);
-    req.flash("success", "Listing deleted successfully!");
-    res.redirect("/listings");
-  }),
+  wrapAsync(listingController.deleteListing),
 );
 
 module.exports = router;
