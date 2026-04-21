@@ -12,20 +12,30 @@ const {
   validateListing,
 } = require("../middlewares/middlewares.js");
 
+router.post("/", (req, res) => {
+  console.log(req.body);
+});
 // all listings
+
 //create new listing
-router.route("/")
-  .get(wrapAsync(listingController.allListings))
-  .post(
-    isLoggedIn,
-    validateListing,
-    wrapAsync(listingController.createNewListing),
-);
+router.route("/").get(wrapAsync(listingController.allListings));
+//   .post(
+//     isLoggedIn,
+//     validateListing,
+//     wrapAsync(listingController.createNewListing)
+// );
 
 //create new
 router.get("/new", isLoggedIn, (req, res) => {
   res.render("listing/new");
 });
+
+router.get("/search", wrapAsync(listingController.searchBooks));
+
+router.get(
+  "/book/:externalId",
+  wrapAsync(listingController.getBookByExternalId),
+);
 
 //render edit form
 router.get(
@@ -38,14 +48,21 @@ router.get(
 router
   .route("/:id")
   .get(wrapAsync(listingController.showIndividualListings))
-  .put(isLoggedIn, isOwner, validateListing, wrapAsync(listingController.updateListing))
-  .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing)); 
+  .put(
+    isLoggedIn,
+    isOwner,
+    validateListing,
+    wrapAsync(listingController.updateListing),
+  )
+  .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
-
-//create new listing 
+  router.post(
+  "/:id/read",
+  isLoggedIn,
+  wrapAsync(listingController.markAsRead)
+);
+//create new listing
 // router.get("/", wrapAsync(listingController.allListings));
-
-
 
 //show individual listing
 // router.get("/:id", wrapAsync(listingController.showIndividualListings));
@@ -57,8 +74,6 @@ router
 //   isLoggedIn,
 //   wrapAsync(listingController.createNewListing),
 // );
-
-
 
 //update listing
 // router.put(
@@ -77,13 +92,8 @@ router
 //   wrapAsync(listingController.deleteListing),
 // );
 
-
-
 //show individual listing
 //update listing
 //delete listing
-
-
-
 
 module.exports = router;

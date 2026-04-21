@@ -29,3 +29,9 @@ module.exports.logoutUser = (req, res, next) => {
     res.redirect("/listings");
   });
 };
+
+module.exports.showProfile = async (req, res) => {
+  const user = await User.findById(req.user._id).populate("readBooks");
+
+  res.render("users/profile", { user });
+};

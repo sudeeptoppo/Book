@@ -10,14 +10,20 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const multer = require("multer");
 
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const upload = multer({ dest: "uploads/" });
 
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 const user = require("./routes/user.js");
+if(process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+console.log(process.env.SECRET);
 
 app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);

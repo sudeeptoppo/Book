@@ -1,0 +1,29 @@
+<% layout("layout/boilerplate") %>
+
+<h2 class="text-2xl text-center mt-5">My Library</h2>
+
+<div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 p-6">
+
+  <% user.readBooks.forEach(book => { %>
+    <div class="break-inside-avoid mb-6">
+      <a href="/listings/<%= book._id %>">
+
+        <div class="p-4 bg-white rounded-lg shadow hover:shadow-xl">
+
+          <img src="<%= book.image %>" class="rounded-md w-full mb-3"/>
+
+          <p class="text-lg font-semibold">
+            <%= book.title %>
+          </p>
+
+          <p class="text-sm text-gray-500">
+            <%= book.author %>
+          </p>
+
+        </div>
+
+      </a>
+    </div>
+  <% }) %>
+
+</div>

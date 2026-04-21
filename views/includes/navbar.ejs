@@ -143,7 +143,9 @@
     <li
       class="hover:text-[#e0b04b] cursor-pointer transition-colors duration-300"
     >
-      ABOUT
+      <% if (currentUser) { %>
+  <a href="/profile" class="text-[#c58c6d]">MY LIBRARY</a>
+<% } %>
     </li>
   </ul>
 
@@ -153,12 +155,17 @@
     <div
       class="flex items-center border border-[#c58c6d] rounded-full px-3 py-1"
     >
-      <input
-        type="text"
-        placeholder="Search"
-        class="outline-none bg-transparent text-[#c58c6d] placeholder-[#c58c6d] text-sm w-24"
-      />
-      <i class="fa-solid fa-magnifying-glass text-[#c58c6d]"></i>
+      <form action="/listings/search" method="GET" class="flex items-center">
+  <input
+    type="text"
+    name="q"
+    placeholder="Search books..."
+    class="outline-none bg-transparent text-[#c58c6d] placeholder-[#c58c6d] text-sm w-32"
+  />
+  <button type="submit">
+    <i class="fa-solid fa-magnifying-glass text-[#c58c6d]"></i>
+  </button>
+</form>
     </div>
 
     <% if (!currentUser) { %>
